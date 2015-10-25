@@ -1,22 +1,44 @@
-//
-//  AppDelegate.swift
-//  Beacon-o-rama
-//
-//  Created by Christian H. Mosveen on 24/10/15.
-//  Copyright © 2015 BEKK. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate {
 
     var window: UIWindow?
-
+    let beaconManager = ESTBeaconManager()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        self.beaconManager.delegate = self
+        self.beaconManager.requestAlwaysAuthorization()
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
+        
+        let region = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 54102, minor: 32224, identifier: "Estimotes")
+        self.beaconManager.startMonitoringForRegion(region)
+        self.beaconManager.startRangingBeaconsInRegion(region)
+        
         return true
+    }
+    
+    func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
+        print("Entered region")
+        let notification = UILocalNotification()
+        notification.alertBody = "I CAN SEEEEE YOU!"
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+    }
+    
+    func beaconManager(manager: AnyObject, didExitRegion region: CLBeaconRegion) {
+        print("Left region")
+        let notification = UILocalNotification()
+        notification.alertBody = "Please don't go!"
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+    }
+    
+    func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        //print("Found \(beacons.count) beacons!")
+    }
+    
+    func beaconManager(manager: AnyObject, monitoringDidFailForRegion region: CLBeaconRegion?, withError error: NSError) {
+        print(error.description)
     }
 
     func applicationWillResignActive(application: UIApplication) {
