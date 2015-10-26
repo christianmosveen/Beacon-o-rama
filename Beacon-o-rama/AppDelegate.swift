@@ -13,12 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
         
         let region = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 54102, minor: 32224, identifier: "Estimotes")
-        self.beaconManager.startMonitoringForRegion(region)
-        self.beaconManager.startRangingBeaconsInRegion(region)
+        self.beaconManager.startMonitoringForRegion(region)     // Detekterer inn- og utgang av en beacon-region
+        self.beaconManager.startRangingBeaconsInRegion(region)  // Mottar kontinuerlig data fra beacons
         
         return true
     }
     
+    // MONITORING
     func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
         print("Entered region")
         let notification = UILocalNotification()
@@ -33,12 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
         UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
     
+    // RANGING
     func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
         //print("Found \(beacons.count) beacons!")
-    }
-    
-    func beaconManager(manager: AnyObject, monitoringDidFailForRegion region: CLBeaconRegion?, withError error: NSError) {
-        print(error.description)
     }
 
     func applicationWillResignActive(application: UIApplication) {
