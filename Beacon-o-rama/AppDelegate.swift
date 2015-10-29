@@ -3,6 +3,10 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate {
 
+    let estimoteUuid = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")
+    let major:UInt16 = 22222 // Major number
+    let minor:UInt16 = 11111 // Minor number
+    
     var window: UIWindow?
     let beaconManager = ESTBeaconManager()
 
@@ -12,31 +16,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTBeaconManagerDelegate 
         
         UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert, categories: nil))
         
-        let region = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 54102, minor: 32224, identifier: "Estimotes")
+        let region = CLBeaconRegion(proximityUUID: estimoteUuid!, major: major, minor: minor, identifier: "Estimotes")
+        
         self.beaconManager.startMonitoringForRegion(region)     // Detekterer inn- og utgang av en beacon-region
-        self.beaconManager.startRangingBeaconsInRegion(region)  // Mottar kontinuerlig data fra beacons
         
         return true
     }
     
-    // MONITORING
     func beaconManager(manager: AnyObject, didEnterRegion region: CLBeaconRegion) {
-        print("Entered region")
+        print("Entered beacon region")
         let notification = UILocalNotification()
         notification.alertBody = "I CAN SEEEEE YOU!"
         UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
     
     func beaconManager(manager: AnyObject, didExitRegion region: CLBeaconRegion) {
-        print("Left region")
+        print("Left beacon region")
         let notification = UILocalNotification()
-        notification.alertBody = "Please don't go!"
+        notification.alertBody = "Please don't go.."
         UIApplication.sharedApplication().presentLocalNotificationNow(notification)
-    }
-    
-    // RANGING
-    func beaconManager(manager: AnyObject, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
-        //print("Found \(beacons.count) beacons!")
     }
 
     func applicationWillResignActive(application: UIApplication) {
