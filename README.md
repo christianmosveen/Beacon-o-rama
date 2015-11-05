@@ -17,4 +17,12 @@
 * Nearable + Triggers: "Hvis jeg er i nærheten av tanntråden, og pakka beveger seg og klokka er over ti; sett et kryss i boka."
 * Eddystone-URL: GUI-for å betale parkering, melde feil på kaffemaskin, etc.
 * Indoor Location: Teste med Estimote app og så lage noe ordentlig ved å bruke SDKen
+* Wallet: Pushe kuponger
 * BEKK: Dette møterommet er ledig, vil du booke den inneværende timen?
+* Fagdag: Koble seg på IoT-workshoppen
+
+## Lenker
+
+http://developer.estimote.com/
+https://github.com/frostney/react-native-ibeacon
+https://github.com/sandeepmistry/node-bleacon
