@@ -23,6 +23,6 @@
 
 ## Lenker
 
-http://developer.estimote.com/
-https://github.com/frostney/react-native-ibeacon
-https://github.com/sandeepmistry/node-bleacon
+* http://developer.estimote.com/
+* https://github.com/frostney/react-native-ibeacon
+* https://github.com/sandeepmistry/node-bleacon
